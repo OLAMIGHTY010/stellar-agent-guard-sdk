@@ -207,5 +207,10 @@ Verdict → halt semantics, shared across all three adapters:
 
 Throwing on refusal is deliberate here: the AI SDK renders a thrown tool error
 into its error stream, and a blocked call must not produce a tool *result* the
-model could read as success. `ai` is an optional peer capability — the adapter
-is written structurally, so the SDK takes no dependency on the `ai` package.
+model could read as success. Because the refusal error is thrown before entering
+the wrapped function body, `execute` never runs on a refusal — preventing unauthorized
+operations, unexpected side-effects, or un-policy-checked spend. `ai` is an optional peer
+capability — the adapter is written structurally, so the SDK takes no dependency on
+the `ai` package.
+
+See the [full runnable Vercel AI SDK example](../../examples/vercelai.ts) ([`examples/vercelai.ts`](../../examples/vercelai.ts)) for an end-to-end demonstration with both allowed and blocked tool invocations.
